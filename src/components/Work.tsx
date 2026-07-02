@@ -3,6 +3,9 @@ import WorkImage from "./WorkImage";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import eduTraceDashboard from "../assets/Edtrace1.png";
+import restaurantPreview from "../assets/Resturant.png";
+import smartNasPreview from "../assets/Smart_nas.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -44,12 +47,32 @@ const projects: ProjectItem[] = [
     liveUrl: "https://digital-clock-green-omega.vercel.app"
   },
   {
-    title: "Jong Nham Restaurant",
+    title: "Restaurant Website - Jong Nham",
     category: "GitHub Project / Website",
     tools: "HTML, CSS, restaurant landing page, responsive layout, Vercel deployment",
-    image: "/web_development_banner.png",
+    image: restaurantPreview,
     repoUrl: "https://github.com/HornVanhong/JongNham_Resturant",
     liveUrl: "https://jong-nham-resturant.vercel.app"
+  },
+  {
+    title: "EduTrace",
+    category: "Education Project / Student Tracking",
+    tools: "Student records, education workflow, dashboard UI, tracking and management features",
+    image: eduTraceDashboard
+  },
+  {
+    title: "Smart App - NAS",
+    category: "GitHub Project / Smart Mobile Service",
+    tools: "JavaScript, Khmer interface, Smart service dashboard, account and package UI",
+    image: smartNasPreview,
+    repoUrl: "https://github.com/HornVanhong/Smart_App"
+  },
+  {
+    title: "Smart Game",
+    category: "GitHub Project / Browser Game",
+    tools: "HTML, CSS, JavaScript, browser game logic, interactive UI",
+    image: "/web_development_banner.png",
+    repoUrl: "https://github.com/HornVanhong/smart_game"
   },
   {
     title: "Shodan Cybersecurity Tutorial",

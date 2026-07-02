@@ -126,12 +126,18 @@
   object-fit: cover;
 }
 .work-image img {
+  width: min(100%, 420px);
+  height: 260px;
   max-width: 100%;
-  max-height: 350px;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 8px;
+  border: 1px solid rgba(34, 211, 238, 0.16);
+  background: rgba(255, 255, 255, 0.04);
 }
 @media only screen and (max-height: 900px) {
   .work-image img {
-    max-height: 250px;
+    height: 220px;
   }
   .work-box {
     padding-top: 40px;
@@ -178,7 +184,7 @@
 
 @media only screen and (max-height: 650px) {
   .work-image img {
-    max-height: 200px;
+    height: 180px;
   }
   .work-section h2 {
     font-size: 40px;
@@ -234,6 +240,12 @@
   .work-flex::before,
   .work-flex::after {
     display: none !important;
+  }
+  .work-image img {
+    width: 100%;
+    height: auto;
+    max-height: 260px;
+    aspect-ratio: 16 / 10;
   }
 }
 

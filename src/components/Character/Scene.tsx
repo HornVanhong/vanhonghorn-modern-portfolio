@@ -12,6 +12,7 @@ import {
 } from "./utils/mouseUtils";
 import setAnimations from "./utils/animationUtils";
 import { setProgress } from "../Loading";
+import { setCharTimeline, setAllTimeline } from "../utils/GsapScroll";
 
 const Scene = () => {
   const canvasDiv = useRef<HTMLDivElement | null>(null);
@@ -21,6 +22,10 @@ const Scene = () => {
 
   useEffect(() => {
     if (canvasDiv.current) {
+      let isMounted = true;
+      let cleanupCharTimeline: (() => void) | null = null;
+      let cleanupAllTimeline: (() => void) | null = null;
+
       let rect = canvasDiv.current.getBoundingClientRect();
       let container = { width: rect.width, height: rect.height };
       const aspect = container.width / container.height;
@@ -59,6 +64,7 @@ const Scene = () => {
       window.addEventListener("resize", onResize);
 
       loadCharacter().then((gltf) => {
+        if (!isMounted) return;
         if (gltf) {
           const animations = setAnimations(gltf);
           hoverDivRef.current && animations.hover(gltf, hoverDivRef.current);
@@ -67,8 +73,14 @@ const Scene = () => {
           scene.add(activeCharacter);
           headBone = activeCharacter.getObjectByName("spine006") || null;
           screenLight = activeCharacter.getObjectByName("screenlight") || null;
+
+          cleanupCharTimeline = setCharTimeline(activeCharacter, camera);
+          cleanupAllTimeline = setAllTimeline();
+
           progress.loaded().then(() => {
+            if (!isMounted) return;
             setTimeout(() => {
+              if (!isMounted) return;
               light.turnOnLights();
               animations.startIntro();
             }, 2500);
@@ -105,8 +117,10 @@ const Scene = () => {
         landingDiv.addEventListener("touchstart", onTouchStart);
         landingDiv.addEventListener("touchend", onTouchEnd);
       }
+
+      let animationFrameId: number;
       const animate = () => {
-        requestAnimationFrame(animate);
+        animationFrameId = requestAnimationFrame(animate);
         if (headBone) {
           handleHeadRotation(
             headBone,
@@ -125,7 +139,12 @@ const Scene = () => {
         renderer.render(scene, camera);
       };
       animate();
+
       return () => {
+        isMounted = false;
+        cancelAnimationFrame(animationFrameId);
+        if (cleanupCharTimeline) cleanupCharTimeline();
+        if (cleanupAllTimeline) cleanupAllTimeline();
         clearTimeout(debounce);
         scene.clear();
         renderer.dispose();

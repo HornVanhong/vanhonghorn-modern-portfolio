@@ -8,52 +8,58 @@ import "./styles/SocialIcons.css";
 import { TbNotes } from "react-icons/tb";
 import { useEffect } from "react";
 import HoverLinks from "./HoverLinks";
+import gsap from "gsap";
 
 const SocialIcons = () => {
   useEffect(() => {
     const social = document.getElementById("social") as HTMLElement;
+    if (!social) return;
+
+    const cleanups: Array<() => void> = [];
 
     social.querySelectorAll("span").forEach((item) => {
       const elem = item as HTMLElement;
       const link = elem.querySelector("a") as HTMLElement;
+      if (!link) return;
 
-      const rect = elem.getBoundingClientRect();
-      let mouseX = rect.width / 2;
-      let mouseY = rect.height / 2;
-      let currentX = 0;
-      let currentY = 0;
+      // Set initial variables for centering
+      gsap.set(link, { "--siLeft": "20px", "--siTop": "20px" });
 
-      const updatePosition = () => {
-        currentX += (mouseX - currentX) * 0.1;
-        currentY += (mouseY - currentY) * 0.1;
-
-        link.style.setProperty("--siLeft", `${currentX}px`);
-        link.style.setProperty("--siTop", `${currentY}px`);
-
-        requestAnimationFrame(updatePosition);
-      };
+      const xTo = gsap.quickTo(link, "--siLeft", { duration: 0.2, ease: "power2.out" }) as any;
+      const yTo = gsap.quickTo(link, "--siTop", { duration: 0.2, ease: "power2.out" }) as any;
 
       const onMouseMove = (e: MouseEvent) => {
+        const rect = elem.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
 
         if (x < 40 && x > 10 && y < 40 && y > 5) {
-          mouseX = x;
-          mouseY = y;
+          xTo(`${x}px`);
+          yTo(`${y}px`);
         } else {
-          mouseX = rect.width / 2;
-          mouseY = rect.height / 2;
+          xTo(`${rect.width / 2}px`);
+          yTo(`${rect.height / 2}px`);
         }
       };
 
-      document.addEventListener("mousemove", onMouseMove);
-
-      updatePosition();
-
-      return () => {
-        elem.removeEventListener("mousemove", onMouseMove);
+      const onMouseLeave = () => {
+        const rect = elem.getBoundingClientRect();
+        xTo(`${rect.width / 2}px`);
+        yTo(`${rect.height / 2}px`);
       };
+
+      elem.addEventListener("mousemove", onMouseMove);
+      elem.addEventListener("mouseleave", onMouseLeave);
+
+      cleanups.push(() => {
+        elem.removeEventListener("mousemove", onMouseMove);
+        elem.removeEventListener("mouseleave", onMouseLeave);
+      });
     });
+
+    return () => {
+      cleanups.forEach((cleanup) => cleanup());
+    };
   }, []);
 
   return (

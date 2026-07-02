@@ -5,10 +5,13 @@ export function setCharTimeline(
   character: THREE.Object3D<THREE.Object3DEventMap> | null,
   camera: THREE.PerspectiveCamera
 ) {
+  const cleanups: (() => void)[] = [];
   let intensity: number = 0;
-  setInterval(() => {
+  const intensityInterval = setInterval(() => {
     intensity = Math.random();
   }, 200);
+  cleanups.push(() => clearInterval(intensityInterval));
+
   const tl1 = gsap.timeline({
     scrollTrigger: {
       trigger: ".landing-section",
@@ -19,6 +22,11 @@ export function setCharTimeline(
     },
     defaults: { ease: "none" }
   });
+  cleanups.push(() => {
+    tl1.kill();
+    tl1.scrollTrigger?.kill();
+  });
+
   const tl2 = gsap.timeline({
     scrollTrigger: {
       trigger: ".about-section",
@@ -29,6 +37,11 @@ export function setCharTimeline(
     },
     defaults: { ease: "none" }
   });
+  cleanups.push(() => {
+    tl2.kill();
+    tl2.scrollTrigger?.kill();
+  });
+
   const tl3 = gsap.timeline({
     scrollTrigger: {
       trigger: ".about-section",
@@ -39,6 +52,11 @@ export function setCharTimeline(
     },
     defaults: { ease: "none" }
   });
+  cleanups.push(() => {
+    tl3.kill();
+    tl3.scrollTrigger?.kill();
+  });
+
   let screenLight: any, monitor: any;
   character?.children.forEach((object: any) => {
     if (object.name === "Plane004") {
@@ -55,11 +73,12 @@ export function setCharTimeline(
       object.material.transparent = true;
       object.material.opacity = 0;
       object.material.emissive.set("#C8BFFF");
-      gsap.timeline({ repeat: -1, repeatRefresh: true }).to(object.material, {
+      const flickerTl = gsap.timeline({ repeat: -1, repeatRefresh: true }).to(object.material, {
         emissiveIntensity: () => intensity * 8,
         duration: () => Math.random() * 0.6,
         delay: () => Math.random() * 0.1,
       });
+      cleanups.push(() => flickerTl.kill());
       screenLight = object;
     }
   });
@@ -131,8 +150,16 @@ export function setCharTimeline(
         },
       });
       tM2.to(".what-box-in", { display: "flex", duration: 0.1, delay: 0 }, 0);
+      cleanups.push(() => {
+        tM2.kill();
+        tM2.scrollTrigger?.kill();
+      });
     }
   }
+
+  return () => {
+    cleanups.forEach((cleanup) => cleanup());
+  };
 }
 
 export function setAllTimeline() {
@@ -192,4 +219,9 @@ export function setAllTimeline() {
       0
     );
   }
+
+  return () => {
+    careerTimeline.kill();
+    careerTimeline.scrollTrigger?.kill();
+  };
 }

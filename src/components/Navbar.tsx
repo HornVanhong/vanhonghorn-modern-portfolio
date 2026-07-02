@@ -28,10 +28,11 @@ const Navbar = ({ onReady }: { onReady?: () => void }) => {
       onReady();
     }
 
+    const clickHandlers: Array<{ elem: HTMLAnchorElement; handler: (e: MouseEvent) => void }> = [];
     let links = document.querySelectorAll(".header ul a");
     links.forEach((elem) => {
       let element = elem as HTMLAnchorElement;
-      element.addEventListener("click", (e) => {
+      const onClick = (e: MouseEvent) => {
         setMenuOpen(false);
 
         if (window.innerWidth > 1024) {
@@ -40,11 +41,22 @@ const Navbar = ({ onReady }: { onReady?: () => void }) => {
           let section = elem.getAttribute("data-href");
           smoother.scrollTo(section, true, "top top");
         }
-      });
+      };
+      element.addEventListener("click", onClick as EventListener);
+      clickHandlers.push({ elem: element, handler: onClick });
     });
-    window.addEventListener("resize", () => {
+
+    const onResize = () => {
       ScrollSmoother.refresh(true);
-    });
+    };
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      clickHandlers.forEach(({ elem, handler }) => {
+        elem.removeEventListener("click", handler as EventListener);
+      });
+      window.removeEventListener("resize", onResize);
+    };
   }, []);
   return (
     <>

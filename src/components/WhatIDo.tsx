@@ -1,170 +1,352 @@
-import { useEffect, useRef } from "react";
-import "./styles/WhatIDo.css";
+import { useRef, type ReactNode } from "react";
+import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+import {
+  FaCode,
+  FaGlobe,
+  FaMobileAlt,
+  FaNetworkWired,
+  FaShieldAlt,
+} from "react-icons/fa";
+import "./styles/WhatIDo.css";
 
-const WhatIDo = () => {
-  const containerRef = useRef<(HTMLDivElement | null)[]>([]);
-  const setRef = (el: HTMLDivElement | null, index: number) => {
-    containerRef.current[index] = el;
-  };
-  useEffect(() => {
-    if (ScrollTrigger.isTouch) {
-      containerRef.current.forEach((container) => {
-        if (container) {
-          container.classList.remove("what-noTouch");
-          container.addEventListener("click", () => handleClick(container));
-        }
-      });
-    }
-    return () => {
-      containerRef.current.forEach((container) => {
-        if (container) {
-          container.removeEventListener("click", () => handleClick(container));
-        }
-      });
-    };
-  }, []);
+gsap.registerPlugin(ScrollTrigger);
+
+interface SkillBarProps {
+  name: string;
+  level: number;
+}
+
+interface SkillGroup {
+  title: string;
+  summary: string;
+  icon: ReactNode;
+  level: string;
+  focus: string;
+  skills: SkillBarProps[];
+  tools: string[];
+  image: string;
+}
+
+const skillGroups: SkillGroup[] = [
+  {
+    title: "Cyber Security",
+    summary: "Security fundamentals, Linux administration, and secure system auditing.",
+    icon: <FaShieldAlt aria-hidden="true" />,
+    level: "Core focus",
+    focus: "Defensive systems",
+    skills: [
+      { name: "Linux (Kali, CentOS, Debian)", level: 80 },
+      { name: "Cybersecurity Principles", level: 75 },
+      { name: "Database Security (SQL Audits)", level: 70 },
+      { name: "Defensive Coding Standards", level: 65 },
+    ],
+    tools: ["Kali Linux", "SQL", "Git", "Wireshark"],
+    image: "/cyber_security_banner.png",
+  },
+  {
+    title: "App Development",
+    summary: "Mobile UI creation, cross-platform apps, and database integration.",
+    icon: <FaMobileAlt aria-hidden="true" />,
+    level: "Applied",
+    focus: "Mobile delivery",
+    skills: [
+      { name: "Flutter & Dart", level: 85 },
+      { name: "React Native", level: 75 },
+      { name: "Java (Android SDK)", level: 70 },
+      { name: "PHP / backend API structures", level: 65 },
+    ],
+    tools: ["Flutter", "React Native", "Java", "REST APIs"],
+    image: "/app_development_banner.png",
+  },
+  {
+    title: "Web Development",
+    summary: "Responsive front-end development with standard and modern toolsets.",
+    icon: <FaGlobe aria-hidden="true" />,
+    level: "Strong",
+    focus: "Modern interfaces",
+    skills: [
+      { name: "HTML / CSS / JavaScript", level: 85 },
+      { name: "React.js / Next.js", level: 80 },
+      { name: "TypeScript", level: 70 },
+      { name: "CSS Modules / Sass / styled-components", level: 70 },
+    ],
+    tools: ["React", "Next.js", "TypeScript", "Figma Design"],
+    image: "/web_development_banner.png",
+  },
+  {
+    title: "Networking & Admin",
+    summary: "LAN setup, Cisco NetAcad configurations, and packet capture analytics.",
+    icon: <FaNetworkWired aria-hidden="true" />,
+    level: "Practical",
+    focus: "Network operations",
+    skills: [
+      { name: "Cisco Routing & Switching", level: 75 },
+      { name: "Network Configuration Labs", level: 70 },
+      { name: "Protocol Sniffing (ARP, DNS)", level: 65 },
+    ],
+    tools: ["Cisco Packet Tracer", "ARP", "DNS", "DHCP"],
+    image: "/networking_admin_banner.png",
+  },
+];
+
+const SkillBar: React.FC<SkillBarProps> = ({ name, level }) => {
   return (
-    <div className="whatIDO">
-      <div className="what-box">
-        <h2 className="title">
-          W<span className="hat-h2">HAT</span>
-          <div>
-            I<span className="do-h2"> DO</span>
-          </div>
-        </h2>
+    <div className="skill-bar">
+      <div className="skill-bar-header">
+        <span>{name}</span>
+        <span className="skill-percent" data-level={level}>0%</span>
       </div>
-      <div className="what-box">
-        <div className="what-box-in">
-          <div className="what-border2">
-            <svg width="100%">
-              <line
-                x1="0"
-                y1="0"
-                x2="0"
-                y2="100%"
-                stroke="white"
-                strokeWidth="2"
-                strokeDasharray="7,7"
-              />
-              <line
-                x1="100%"
-                y1="0"
-                x2="100%"
-                y2="100%"
-                stroke="white"
-                strokeWidth="2"
-                strokeDasharray="7,7"
-              />
-            </svg>
-          </div>
-          <div
-            className="what-content what-noTouch"
-            ref={(el) => setRef(el, 0)}
-          >
-            <div className="what-border1">
-              <svg height="100%">
-                <line
-                  x1="0"
-                  y1="0"
-                  x2="100%"
-                  y2="0"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeDasharray="6,6"
-                />
-                <line
-                  x1="0"
-                  y1="100%"
-                  x2="100%"
-                  y2="100%"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeDasharray="6,6"
-                />
-              </svg>
-            </div>
-            <div className="what-corner"></div>
-
-            <div className="what-content-in">
-              <h3>DEVELOP</h3>
-              <h4>Description</h4>
-              <p>
-                Building modern, user-focused web and mobile interfaces using cross-platform frameworks, styled systems, and clean code workflows.
-              </p>
-              <h5>Skillset & tools</h5>
-              <div className="what-content-flex">
-                <div className="what-tags">React Native</div>
-                <div className="what-tags">Flutter</div>
-                <div className="what-tags">TypeScript</div>
-                <div className="what-tags">React.js</div>
-                <div className="what-tags">Next.js</div>
-                <div className="what-tags">Java</div>
-                <div className="what-tags">JavaScript</div>
-                <div className="what-tags">PHP</div>
-                <div className="what-tags">MySQL</div>
-                <div className="what-tags">Git</div>
-              </div>
-              <div className="what-arrow"></div>
-            </div>
-          </div>
-          <div
-            className="what-content what-noTouch"
-            ref={(el) => setRef(el, 1)}
-          >
-            <div className="what-border1">
-              <svg height="100%">
-                <line
-                  x1="0"
-                  y1="100%"
-                  x2="100%"
-                  y2="100%"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeDasharray="6,6"
-                />
-              </svg>
-            </div>
-            <div className="what-corner"></div>
-            <div className="what-content-in">
-              <h3>SECURITY</h3>
-              <h4>Description</h4>
-              <p>
-                Securing system infrastructures, configuring network routing, performing database audits, and analyzing network protocols.
-              </p>
-              <h5>Skillset & tools</h5>
-              <div className="what-content-flex">
-                <div className="what-tags">Kali Linux</div>
-                <div className="what-tags">Cyber Security</div>
-                <div className="what-tags">Cisco Packet Tracer</div>
-                <div className="what-tags">Wireshark</div>
-                <div className="what-tags">Database Audit</div>
-                <div className="what-tags">Linux Admin</div>
-                <div className="what-tags">Bash Scripting</div>
-                <div className="what-tags">Network Security</div>
-              </div>
-              <div className="what-arrow"></div>
-            </div>
-          </div>
-        </div>
+      <div className="skill-bar-bg">
+        <div className="skill-bar-fill" style={{ width: "0%" }} data-level={level} />
       </div>
     </div>
   );
 };
 
-export default WhatIDo;
+const WhatIDo = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
 
-function handleClick(container: HTMLDivElement) {
-  container.classList.toggle("what-content-active");
-  container.classList.remove("what-sibling");
-  if (container.parentElement) {
-    const siblings = Array.from(container.parentElement.children);
+  useGSAP(() => {
+    if (typeof window === "undefined" || !containerRef.current) return;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    siblings.forEach((sibling) => {
-      if (sibling !== container) {
-        sibling.classList.remove("what-content-active");
-        sibling.classList.toggle("what-sibling");
+    if (prefersReducedMotion) {
+      gsap.set([
+        ".skills-header > *",
+        ".skills-overview > div",
+        ".skill-card",
+        ".skill-bar-fill"
+      ], { opacity: 1, y: 0, clearProps: "transform" });
+      containerRef.current.querySelectorAll<HTMLElement>(".skill-bar-fill").forEach((fill) => {
+        fill.style.width = `${fill.dataset.level ?? 0}%`;
+      });
+      containerRef.current.querySelectorAll<HTMLElement>(".skill-percent").forEach((percent) => {
+        percent.textContent = `${percent.dataset.level ?? 0}%`;
+      });
+      return;
+    }
+
+    // Set initial states
+    gsap.set([
+      ".skills-header > *",
+      ".skills-overview > div",
+      ".skill-card"
+    ], {
+      opacity: 0,
+      y: 35
+    });
+
+    // 1. Header scroll animation
+    gsap.to(".skills-header > *", {
+      opacity: 1,
+      y: 0,
+      stagger: 0.1,
+      duration: 0.8,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: ".skills-header",
+        start: "top 85%",
+        toggleActions: "play none none none"
       }
     });
-  }
-}
+
+    // 2. Overview scroll animation
+    gsap.to(".skills-overview > div", {
+      opacity: 1,
+      y: 0,
+      stagger: 0.1,
+      duration: 0.6,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: ".skills-overview",
+        start: "top 85%",
+        toggleActions: "play none none none"
+      }
+    });
+
+    // 3. Cards reveal
+    gsap.to(".skill-card", {
+      opacity: 1,
+      y: 0,
+      stagger: 0.15,
+      duration: 0.7,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: ".skills-grid",
+        start: "top 80%",
+        toggleActions: "play none none none"
+      }
+    });
+
+    // 4. Progress bar fills
+    const bars = containerRef.current?.querySelectorAll(".skill-bar");
+    if (bars) {
+      bars.forEach((bar) => {
+        const fill = bar.querySelector(".skill-bar-fill") as HTMLElement;
+        const percentText = bar.querySelector(".skill-percent") as HTMLElement;
+        if (!fill || !percentText) return;
+        const targetLevel = parseInt(fill.getAttribute("data-level") || "0", 10);
+
+        // Animate progress bar fill width
+        gsap.to(fill, {
+          width: `${targetLevel}%`,
+          duration: 1.2,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: bar,
+            start: "top 95%",
+            toggleActions: "play none none none"
+          }
+        });
+
+        // Animate percentage counter
+        const counterObj = { value: 0 };
+        gsap.to(counterObj, {
+          value: targetLevel,
+          duration: 1.2,
+          ease: "power2.out",
+          snap: { value: 1 },
+          onUpdate: () => {
+            percentText.textContent = `${counterObj.value}%`;
+          },
+          scrollTrigger: {
+            trigger: bar,
+            start: "top 95%",
+            toggleActions: "play none none none"
+          }
+        });
+      });
+    }
+
+    // 3D Hover Tilt for Skill Cards
+    const cards = containerRef.current.querySelectorAll(".skill-card");
+    const cleanupTiltListeners: Array<() => void> = [];
+    cards.forEach((card) => {
+      const onMouseMove = (e: MouseEvent) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        // Update spotlight coordinates
+        (card as HTMLElement).style.setProperty("--x", `${x}px`);
+        (card as HTMLElement).style.setProperty("--y", `${y}px`);
+
+        const xc = rect.width / 2;
+        const yc = rect.height / 2;
+        const dx = x - xc;
+        const dy = y - yc;
+
+        const tiltX = -(dy / yc) * 8;
+        const tiltY = (dx / xc) * 8;
+
+        gsap.to(card, {
+          rotateX: tiltX,
+          rotateY: tiltY,
+          y: -5,
+          transformPerspective: 1000,
+          ease: "power2.out",
+          duration: 0.4,
+          overwrite: "auto",
+        });
+      };
+
+      const onMouseLeave = () => {
+        gsap.to(card, {
+          rotateX: 0,
+          rotateY: 0,
+          y: 0,
+          ease: "power3.out",
+          duration: 0.8,
+          overwrite: "auto",
+        });
+      };
+
+      card.addEventListener("mousemove", onMouseMove as EventListener);
+      card.addEventListener("mouseleave", onMouseLeave as EventListener);
+      cleanupTiltListeners.push(() => {
+        card.removeEventListener("mousemove", onMouseMove as EventListener);
+        card.removeEventListener("mouseleave", onMouseLeave as EventListener);
+      });
+    });
+
+    return () => {
+      cleanupTiltListeners.forEach((cleanup) => cleanup());
+    };
+  }, { scope: containerRef });
+
+  return (
+    <section id="skills" ref={containerRef} className="skills-page">
+      <div className="skills-header">
+        <span className="skills-kicker">
+          <FaCode aria-hidden="true" />
+          Technical Profile
+        </span>
+        <h2 className="skills-title">Skills & Competencies</h2>
+        <p className="skills-intro">
+          A practical mix of cyber security threat management, network structures,
+          and production-oriented front-end web and mobile development capabilities.
+        </p>
+      </div>
+
+      <div className="skills-overview" aria-label="Skills summary">
+        <div>
+          <strong>4</strong>
+          <span>Key Domains</span>
+        </div>
+        <div>
+          <strong>16+</strong>
+          <span>Tools & Technologies</span>
+        </div>
+        <div>
+          <strong>Secure</strong>
+          <span>Development Approach</span>
+        </div>
+      </div>
+
+      <div className="skills-grid">
+        {skillGroups.map((group) => (
+          <article className="skill-card" key={group.title}>
+            <div className="card-spotlight" />
+            <div className="skill-card-media">
+              <img
+                src={group.image}
+                alt={group.title}
+                className="skill-card-image"
+                loading="lazy"
+              />
+              <div className="skill-card-image-overlay" />
+              <div className="skill-card-media-content">
+                <span className="skill-icon">{group.icon}</span>
+                <span className="skill-level">{group.level}</span>
+              </div>
+            </div>
+
+            <div className="skill-card-body">
+              <div className="skill-card-heading">
+                <span className="skill-focus">{group.focus}</span>
+                <h3>{group.title}</h3>
+              </div>
+              <p className="skill-summary">{group.summary}</p>
+
+              <div className="skill-bars">
+                {group.skills.map((skill) => (
+                  <SkillBar key={skill.name} {...skill} />
+                ))}
+              </div>
+            </div>
+
+            <div className="skill-tags">
+              {group.tools.map((tool) => (
+                <span key={tool}>{tool}</span>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+export default WhatIDo;

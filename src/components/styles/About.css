@@ -33,7 +33,7 @@
 @media only screen and (max-width: 767px) {
   .about-section {
     width: min(100% - 28px, 520px);
-    padding: 36px 0 10px;
+    padding: 24px 0 0;
     align-items: flex-start;
     transform: none !important;
     opacity: 1 !important;
@@ -46,16 +46,16 @@
   }
 
   .about-me h3 {
-    font-size: 13px;
+    font-size: 12px;
     line-height: 1;
     letter-spacing: 3px;
-    margin: 0 0 16px;
+    margin: 0 0 12px;
   }
 
   .about-me p {
     margin: 0;
-    font-size: clamp(19px, 5.8vw, 24px);
-    line-height: 1.18;
+    font-size: clamp(17px, 5vw, 21px);
+    line-height: 1.2;
     letter-spacing: 0.2px;
     font-weight: 550;
     overflow-wrap: break-word;

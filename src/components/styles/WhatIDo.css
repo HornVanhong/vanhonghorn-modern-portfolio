@@ -289,8 +289,9 @@
 @media (max-width: 900px) {
   .skills-page {
     width: min(100% - 28px, 560px);
-    padding: 22px 0 64px;
-    margin-bottom: 20px;
+    padding: 12px 0 56px;
+    margin-top: 0;
+    margin-bottom: 0;
     align-items: stretch;
     transform: none !important;
     opacity: 1 !important;
@@ -303,14 +304,14 @@
   }
 
   .skills-title {
-    font-size: clamp(34px, 9.5vw, 46px);
-    line-height: 0.98;
-    margin-bottom: 16px;
+    font-size: clamp(30px, 8.2vw, 38px);
+    line-height: 1;
+    margin-bottom: 0;
   }
 
   .skills-grid {
     grid-template-columns: 1fr;
-    gap: 18px;
+    gap: 12px;
   }
 
   .skill-card {
@@ -320,28 +321,21 @@
 
 @media (max-width: 640px) {
   .skills-header {
-    margin-bottom: 18px;
+    margin-bottom: 14px;
   }
 
   .skills-kicker {
-    font-size: 12px;
+    font-size: 11px;
     letter-spacing: 1.4px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
 
   .skills-intro {
-    font-size: 15px;
-    line-height: 23px;
+    display: none;
   }
 
   .skills-overview {
-    grid-template-columns: 1fr;
-    gap: 10px;
-    margin-bottom: 18px;
-    padding: 10px;
-    border: 1px solid rgba(34, 211, 238, 0.12);
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.025);
+    display: none;
   }
 
   .skills-overview div {
@@ -353,7 +347,7 @@
   }
 
   .skill-card-media {
-    height: 142px;
+    height: 78px;
   }
 
   .skill-icon {
@@ -370,21 +364,25 @@
   }
 
   .skill-card-body {
-    padding: 1rem 1rem 0;
+    padding: 0.85rem 0.9rem 0;
   }
 
   .skill-card h3 {
-    font-size: 22px;
+    font-size: 20px;
     line-height: 1.1;
   }
 
   .skill-summary {
-    min-height: 0;
-    margin-bottom: 1rem;
+    display: none;
+  }
+
+  .skill-bars {
+    gap: 0.45rem;
+    margin-bottom: 0.75rem;
   }
 
   .skill-bar {
-    padding: 0.65rem;
+    padding: 0.52rem 0.6rem;
   }
 
   .skill-bar-header {
@@ -395,6 +393,12 @@
   }
 
   .skill-tags {
-    padding: 0.9rem 1rem 1rem;
+    padding: 0.75rem 0.9rem 0.85rem;
+    gap: 6px;
+  }
+
+  .skill-tags span {
+    font-size: 11px;
+    padding: 0.3rem 0.55rem;
   }
 }

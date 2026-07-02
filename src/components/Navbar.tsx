@@ -90,6 +90,11 @@ const Navbar = ({ onReady }: { onReady?: () => void }) => {
             </a>
           </li>
           <li>
+            <a data-href="#skills" href="#skills">
+              <HoverLinks text="SKILLS" />
+            </a>
+          </li>
+          <li>
             <a data-href="#education" href="#education">
               <HoverLinks text="EDUCATION" />
             </a>

@@ -38,88 +38,31 @@ const Contact = () => {
     setStatusMessage("");
 
     try {
-      let telegramSuccess = false;
-      let emailSuccess = false;
-      let errorMessage = "";
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+        }),
+      });
 
-      // 1. Send to Telegram Chatbot
-      try {
-        const botToken = import.meta.env.VITE_TELEGRAM_BOT_TOKEN;
-        const chatId = import.meta.env.VITE_TELEGRAM_CHAT_ID;
+      const data = await res.json().catch(() => null);
 
-        if (botToken && chatId) {
-          const telegramText = `📩 New Portfolio Message:\n\n👤 Name: ${name}\n📧 Email: ${email}\n\n💬 Message:\n${message}`;
-
-          const tgRes = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              chat_id: chatId,
-              text: telegramText,
-            }),
-          });
-          if (tgRes.ok) {
-            telegramSuccess = true;
-          } else {
-            console.error("Telegram API returned non-ok status:", tgRes.status);
-          }
-        } else {
-          console.warn("Telegram bot token or chat ID is missing in environment variables.");
-        }
-      } catch (tgErr) {
-        console.error("Failed to send Telegram notification:", tgErr);
+      if (!res.ok) {
+        throw new Error(data?.error || "Message could not be sent.");
       }
 
-      // 2. Send to Email via FormSubmit
-      try {
-        const payload = new FormData();
-        payload.append("name", name);
-        payload.append("email", email);
-        payload.append("message", message);
-        payload.append("_subject", `Portfolio message from ${name}`);
-        payload.append("_template", "table");
-        payload.append("_captcha", "false");
-
-        const res = await fetch("https://formsubmit.co/ajax/vanhonghorn37@gmail.com", {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-          },
-          body: payload,
-        });
-
-        const data = await res.json().catch(() => null);
-        if (res.ok && data?.success !== false) {
-          emailSuccess = true;
-        } else {
-          errorMessage = data?.message ?? "Email service error.";
-        }
-      } catch (emailErr) {
-        console.error("Failed to send Email notification:", emailErr);
-        errorMessage = emailErr instanceof Error ? emailErr.message : "Email network error.";
-      }
-
-      if (telegramSuccess || emailSuccess) {
-        setSubmitStatus("success");
-        if (telegramSuccess && emailSuccess) {
-          setStatusMessage("Message sent successfully via Telegram and email!");
-        } else if (telegramSuccess) {
-          setStatusMessage("Message sent successfully via Telegram (email delivery failed).");
-        } else {
-          setStatusMessage("Message sent successfully via email (Telegram notification failed).");
-        }
-        setFormData({ name: "", email: "", message: "" });
-      } else {
-        throw new Error(errorMessage || "Message could not be sent. Please try again.");
-      }
+      setSubmitStatus("success");
+      setStatusMessage("Message sent successfully!");
+      setFormData({ name: "", email: "", message: "" });
     } catch (error) {
       setSubmitStatus("error");
       setStatusMessage(
         error instanceof Error
           ? error.message
-          : "Message could not be sent. Please try Telegram or email."
+          : "Message could not be sent. Please try again."
       );
     } finally {
       setSubmitting(false);

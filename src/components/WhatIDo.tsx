@@ -113,7 +113,7 @@ const WhatIDo = () => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const isTouchLayout = window.matchMedia("(max-width: 900px), (pointer: coarse)").matches;
 
-    if (prefersReducedMotion) {
+    if (prefersReducedMotion || isTouchLayout) {
       gsap.set([
         ".skills-header > *",
         ".skills-overview > div",
@@ -291,6 +291,11 @@ const WhatIDo = () => {
           Technical Profile
         </span>
         <h2 className="skills-title">Skills & Competencies</h2>
+        <div className="mobile-skill-pills" aria-label="Main skills">
+          {skillGroups.map((group) => (
+            <span key={group.title}>{group.title}</span>
+          ))}
+        </div>
         <p className="skills-intro">
           A practical mix of cyber security threat management, network structures,
           and production-oriented front-end web and mobile development capabilities.

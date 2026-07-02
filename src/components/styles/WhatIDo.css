@@ -58,6 +58,10 @@
   margin: 0px;
 }
 
+.mobile-skill-pills {
+  display: none;
+}
+
 .skills-overview {
   display: grid;
   grid-template-columns: 1.15fr 1fr 1.15fr;
@@ -316,6 +320,12 @@
 
   .skill-card {
     min-height: auto;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .skill-bar-fill {
+    opacity: 1 !important;
   }
 }
 
@@ -332,6 +342,24 @@
 
   .skills-intro {
     display: none;
+  }
+
+  .mobile-skill-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .mobile-skill-pills span {
+    color: var(--accentColor);
+    background: rgba(34, 211, 238, 0.08);
+    border: 1px solid rgba(34, 211, 238, 0.22);
+    border-radius: 999px;
+    padding: 0.38rem 0.65rem;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
   }
 
   .skills-overview {

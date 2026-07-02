@@ -44,24 +44,29 @@ const Contact = () => {
 
       // 1. Send to Telegram Chatbot
       try {
-        const botToken = import.meta.env.VITE_TELEGRAM_BOT_TOKEN || "7240003396:AAHhwi7U2fIRKqPFsHeESdvpfPF8odymEFU";
-        const chatId = import.meta.env.VITE_TELEGRAM_CHAT_ID || "1675671782";
-        const telegramText = `📩 New Portfolio Message:\n\n👤 Name: ${name}\n📧 Email: ${email}\n\n💬 Message:\n${message}`;
+        const botToken = import.meta.env.VITE_TELEGRAM_BOT_TOKEN;
+        const chatId = import.meta.env.VITE_TELEGRAM_CHAT_ID;
 
-        const tgRes = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            chat_id: chatId,
-            text: telegramText,
-          }),
-        });
-        if (tgRes.ok) {
-          telegramSuccess = true;
+        if (botToken && chatId) {
+          const telegramText = `📩 New Portfolio Message:\n\n👤 Name: ${name}\n📧 Email: ${email}\n\n💬 Message:\n${message}`;
+
+          const tgRes = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              chat_id: chatId,
+              text: telegramText,
+            }),
+          });
+          if (tgRes.ok) {
+            telegramSuccess = true;
+          } else {
+            console.error("Telegram API returned non-ok status:", tgRes.status);
+          }
         } else {
-          console.error("Telegram API returned non-ok status:", tgRes.status);
+          console.warn("Telegram bot token or chat ID is missing in environment variables.");
         }
       } catch (tgErr) {
         console.error("Failed to send Telegram notification:", tgErr);

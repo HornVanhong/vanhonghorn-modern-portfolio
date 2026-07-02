@@ -39,7 +39,10 @@ export default defineConfig({
       name: "api-contact-middleware",
       configureServer(server) {
         server.middlewares.use(async (req, res, next) => {
-          if (req.url?.startsWith("/api/contact")) {
+          const isContact = req.url?.startsWith("/api/contact");
+          const isChat = req.url?.startsWith("/api/chat");
+
+          if (isContact || isChat) {
             if (req.method === "POST") {
               try {
                 let body = "";
@@ -75,9 +78,13 @@ export default defineConfig({
                       },
                     } as any;
 
-                    // Load api/contact.ts using Vite SSR loader
-                    const contactModule = await server.ssrLoadModule("./api/contact.ts");
-                    await contactModule.default(mockReq, mockRes);
+                    if (isContact) {
+                      const contactModule = await server.ssrLoadModule("./api/contact.ts");
+                      await contactModule.default(mockReq, mockRes);
+                    } else {
+                      const chatModule = await server.ssrLoadModule("./api/chat.ts");
+                      await chatModule.default(mockReq, mockRes);
+                    }
                   } catch (err: any) {
                     res.writeHead(500, { "Content-Type": "application/json" });
                     res.end(JSON.stringify({ error: err.message }));

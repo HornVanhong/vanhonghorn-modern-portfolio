@@ -12,9 +12,66 @@ interface ProjectItem {
   tools: string;
   image: string;
   pdfUrl?: string;
+  repoUrl?: string;
+  liveUrl?: string;
+  videoUrl?: string;
 }
 
 const projects: ProjectItem[] = [
+  {
+    title: "Modern Cyber Portfolio",
+    category: "GitHub Project / Live Website",
+    tools: "TypeScript, React, Three.js, GSAP, responsive UI, Vercel deployment",
+    image: "/web_development_banner.png",
+    repoUrl: "https://github.com/HornVanhong/vanhonghorn-modern-portfolio",
+    liveUrl: "https://vanhonghorn-modern-portfolio-5fp2-blush.vercel.app",
+    videoUrl: "https://www.youtube.com/watch?v=HqxXHrZLIUU"
+  },
+  {
+    title: "Portfolio Spider Edition",
+    category: "GitHub Project / Interactive Website",
+    tools: "TypeScript, React, animated portfolio interface, Vercel deployment",
+    image: "/web_development_banner.png",
+    repoUrl: "https://github.com/HornVanhong/vanhonghorn-portfolio_spider",
+    liveUrl: "https://vanhonghorn-portfolio-spider.vercel.app"
+  },
+  {
+    title: "Digital Clock",
+    category: "GitHub Project / Web App",
+    tools: "HTML, CSS, JavaScript, real-time clock UI, responsive browser app",
+    image: "/web_development_banner.png",
+    repoUrl: "https://github.com/HornVanhong/Digital_Clock",
+    liveUrl: "https://digital-clock-green-omega.vercel.app"
+  },
+  {
+    title: "Jong Nham Restaurant",
+    category: "GitHub Project / Website",
+    tools: "HTML, CSS, restaurant landing page, responsive layout, Vercel deployment",
+    image: "/web_development_banner.png",
+    repoUrl: "https://github.com/HornVanhong/JongNham_Resturant",
+    liveUrl: "https://jong-nham-resturant.vercel.app"
+  },
+  {
+    title: "Shodan Cybersecurity Tutorial",
+    category: "YouTube Project / Security Education",
+    tools: "Shodan, IoT discovery, ethical security awareness, network exposure research",
+    image: "https://i4.ytimg.com/vi/Og_m5JMrWJ4/hqdefault.jpg",
+    videoUrl: "https://www.youtube.com/watch?v=Og_m5JMrWJ4"
+  },
+  {
+    title: "SSH Remote Server Control",
+    category: "YouTube Project / System Administration",
+    tools: "SSH, MobaXterm, secure remote server access, beginner IT tutorial",
+    image: "https://i2.ytimg.com/vi/eF-cuR_3zd0/hqdefault.jpg",
+    videoUrl: "https://www.youtube.com/watch?v=eF-cuR_3zd0"
+  },
+  {
+    title: "Flutter API Course Project",
+    category: "YouTube Project / Mobile Development",
+    tools: "Flutter, API data fetching, mobile UI, beginner app development workflow",
+    image: "https://i3.ytimg.com/vi/v6OdtS2WLEQ/hqdefault.jpg",
+    videoUrl: "https://www.youtube.com/watch?v=v6OdtS2WLEQ"
+  },
   {
     title: "Digital Banking Features",
     category: "Mobile Application",
@@ -148,8 +205,43 @@ const Work = () => {
                 </div>
                 <h4>Tools and features</h4>
                 <p>{project.tools}</p>
-                {project.pdfUrl && (
+                {(project.liveUrl || project.repoUrl || project.videoUrl || project.pdfUrl) && (
                   <div className="work-pdf-actions">
+                    {project.liveUrl && (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="work-pdf-btn open"
+                        data-cursor="disable"
+                      >
+                        Live Demo
+                      </a>
+                    )}
+                    {project.repoUrl && (
+                      <a
+                        href={project.repoUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="work-pdf-btn download"
+                        data-cursor="disable"
+                      >
+                        GitHub
+                      </a>
+                    )}
+                    {project.videoUrl && (
+                      <a
+                        href={project.videoUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="work-pdf-btn download"
+                        data-cursor="disable"
+                      >
+                        YouTube
+                      </a>
+                    )}
+                    {project.pdfUrl && (
+                      <>
                     <a
                       href={project.pdfUrl}
                       target="_blank"
@@ -167,10 +259,16 @@ const Work = () => {
                     >
                       Download
                     </a>
+                      </>
+                    )}
                   </div>
                 )}
               </div>
-              <WorkImage image={project.image} alt={project.title} />
+              <WorkImage
+                image={project.image}
+                alt={project.title}
+                link={project.liveUrl || project.videoUrl || project.repoUrl || project.pdfUrl}
+              />
             </div>
           ))}
         </div>

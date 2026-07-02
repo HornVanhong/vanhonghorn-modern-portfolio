@@ -277,7 +277,7 @@ const WhatIDo = () => {
   }, { scope: containerRef });
 
   return (
-    <section id="skills" ref={containerRef} className="skills-page">
+    <section id="skills" ref={containerRef} className="skills-page whatIDO">
       <div className="skills-header">
         <span className="skills-kicker">
           <FaCode aria-hidden="true" />

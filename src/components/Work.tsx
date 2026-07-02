@@ -79,6 +79,8 @@ const Work = () => {
     let timeline: gsap.core.Timeline;
 
     const initTrigger = () => {
+      if (window.innerWidth <= 1024) return;
+
       const getTranslateX = () => {
         const box = document.getElementsByClassName("work-box");
         if (box.length === 0) return 0;

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HoverLinks from "./HoverLinks";
 import { gsap } from "gsap";
@@ -9,6 +9,8 @@ gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
 export let smoother: ScrollSmoother;
 
 const Navbar = ({ onReady }: { onReady?: () => void }) => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   useEffect(() => {
     smoother = ScrollSmoother.create({
       wrapper: "#smooth-wrapper",
@@ -30,6 +32,8 @@ const Navbar = ({ onReady }: { onReady?: () => void }) => {
     links.forEach((elem) => {
       let element = elem as HTMLAnchorElement;
       element.addEventListener("click", (e) => {
+        setMenuOpen(false);
+
         if (window.innerWidth > 1024) {
           e.preventDefault();
           let elem = e.currentTarget as HTMLAnchorElement;
@@ -55,7 +59,19 @@ const Navbar = ({ onReady }: { onReady?: () => void }) => {
         >
           vanhonghorn37@gmail.com
         </a>
-        <ul>
+
+        {/* Hamburger button for mobile/tablet */}
+        <button
+          className={`nav-toggle ${menuOpen ? "open" : ""}`}
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle Navigation Menu"
+        >
+          <span className="hamburger-line"></span>
+          <span className="hamburger-line"></span>
+          <span className="hamburger-line"></span>
+        </button>
+
+        <ul className={menuOpen ? "menu-open" : ""}>
           <li>
             <a data-href="#about" href="#about">
               <HoverLinks text="ABOUT" />

@@ -18,44 +18,35 @@ const Contact = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (submitting) return;
+
+    const name = formData.name.trim();
+    const email = formData.email.trim();
+    const message = formData.message.trim();
+
+    if (!name || !email || !message) {
+      setSubmitStatus("error");
+      setStatusMessage("Please fill in your name, email, and message.");
+      return;
+    }
+
     setSubmitting(true);
     setSubmitStatus("idle");
     setStatusMessage("");
 
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name.trim(),
-          email: formData.email.trim(),
-          message: formData.message.trim(),
-        }),
-      });
+    const subject = encodeURIComponent(`Portfolio message from ${name}`);
+    const body = encodeURIComponent(
+      `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
+    );
 
-      if (!res.ok) {
-        const data = await res.json().catch(() => null);
-        throw new Error(data?.error ?? "Failed to send message.");
-      }
+    window.location.href = `mailto:vanhonghorn37@gmail.com?subject=${subject}&body=${body}`;
 
-      setSubmitStatus("success");
-      setStatusMessage("Message sent successfully!");
-      setFormData({ name: "", email: "", message: "" });
-
-      // Auto-clear success message after 5s
-      setTimeout(() => {
-        setSubmitStatus("idle");
-      }, 5000);
-    } catch (error) {
-      setSubmitStatus("error");
-      setStatusMessage(error instanceof Error ? error.message : "Failed to send message.");
-    } finally {
-      setSubmitting(false);
-    }
+    setSubmitStatus("success");
+    setStatusMessage("Your email app is opening with the message ready to send.");
+    setSubmitting(false);
   };
 
   return (
@@ -127,7 +118,7 @@ const Contact = () => {
             <div className="contact-form-head">
               <h4>Send a message</h4>
               <p>
-                Leave your details and a short message. I’ll review and respond as soon as possible.
+                Leave your details and I’ll open a ready-to-send email draft for you.
               </p>
             </div>
 

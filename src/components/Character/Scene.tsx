@@ -14,6 +14,18 @@ import setAnimations from "./utils/animationUtils";
 import { setProgress } from "../Loading";
 import { setCharTimeline, setAllTimeline } from "../utils/GsapScroll";
 
+const hasWebGL = () => {
+  try {
+    const canvas = document.createElement("canvas");
+    return Boolean(
+      window.WebGLRenderingContext &&
+        (canvas.getContext("webgl2") || canvas.getContext("webgl"))
+    );
+  } catch {
+    return false;
+  }
+};
+
 const Scene = () => {
   const canvasDiv = useRef<HTMLDivElement | null>(null);
   const hoverDivRef = useRef<HTMLDivElement>(null);
@@ -26,20 +38,52 @@ const Scene = () => {
       let cleanupCharTimeline: (() => void) | null = null;
       let cleanupAllTimeline: (() => void) | null = null;
 
-      let rect = canvasDiv.current.getBoundingClientRect();
-      let container = { width: rect.width, height: rect.height };
+      const finishWithoutWebGL = () => {
+        setLoading(100);
+        cleanupAllTimeline = setAllTimeline();
+      };
+
+      if (!hasWebGL()) {
+        finishWithoutWebGL();
+        return () => {
+          isMounted = false;
+          if (cleanupAllTimeline) cleanupAllTimeline();
+        };
+      }
+
+      const rect = canvasDiv.current.getBoundingClientRect();
+      const container = { width: rect.width, height: rect.height };
       const aspect = container.width / container.height;
       const scene = sceneRef.current;
 
-      const renderer = new THREE.WebGLRenderer({
-        alpha: true,
-        antialias: true,
-      });
+      let renderer: THREE.WebGLRenderer;
+      try {
+        renderer = new THREE.WebGLRenderer({
+          alpha: true,
+          antialias: window.devicePixelRatio <= 2,
+          powerPreference: "high-performance",
+        });
+      } catch (error) {
+        console.warn("WebGL unavailable, skipping character scene.", error);
+        finishWithoutWebGL();
+        return () => {
+          isMounted = false;
+          if (cleanupAllTimeline) cleanupAllTimeline();
+        };
+      }
       renderer.setSize(container.width, container.height);
-      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1;
       canvasDiv.current.appendChild(renderer.domElement);
+      renderer.domElement.addEventListener(
+        "webglcontextlost",
+        (event) => {
+          event.preventDefault();
+          setLoading(100);
+        },
+        false
+      );
 
       const camera = new THREE.PerspectiveCamera(14.5, aspect, 0.1, 1000);
       camera.position.z = 10;
@@ -149,7 +193,7 @@ const Scene = () => {
         scene.clear();
         renderer.dispose();
         window.removeEventListener("resize", onResize);
-        if (canvasDiv.current) {
+        if (canvasDiv.current?.contains(renderer.domElement)) {
           canvasDiv.current.removeChild(renderer.domElement);
         }
         document.removeEventListener("mousemove", onMouseMove);

@@ -141,6 +141,10 @@ export function setCharTimeline(
         .to(character.rotation, { x: -0.04, duration: 2, delay: 1 }, 0);
     }
   } else {
+    gsap.set([".about-section", ".whatIDO"], {
+      clearProps: "transform,opacity",
+    });
+
     if (character) {
       const tM2 = gsap.timeline({
         scrollTrigger: {

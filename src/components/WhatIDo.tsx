@@ -111,6 +111,7 @@ const WhatIDo = () => {
   useGSAP(() => {
     if (typeof window === "undefined" || !containerRef.current) return;
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isTouchLayout = window.matchMedia("(max-width: 900px), (pointer: coarse)").matches;
 
     if (prefersReducedMotion) {
       gsap.set([
@@ -221,8 +222,14 @@ const WhatIDo = () => {
     }
 
     // 3D Hover Tilt for Skill Cards
-    const cards = containerRef.current.querySelectorAll(".skill-card");
     const cleanupTiltListeners: Array<() => void> = [];
+    if (isTouchLayout) {
+      return () => {
+        cleanupTiltListeners.forEach((cleanup) => cleanup());
+      };
+    }
+
+    const cards = containerRef.current.querySelectorAll(".skill-card");
     cards.forEach((card) => {
       const onMouseMove = (e: MouseEvent) => {
         const rect = card.getBoundingClientRect();

@@ -288,16 +288,31 @@
 
 @media (max-width: 900px) {
   .skills-page {
-    padding: 90px 0;
-    margin-bottom: 80px;
+    width: min(100% - 28px, 560px);
+    padding: 22px 0 64px;
+    margin-bottom: 20px;
+    align-items: stretch;
+    transform: none !important;
+    opacity: 1 !important;
   }
+
+  .skills-header {
+    text-align: left;
+    max-width: none;
+    transform: none !important;
+  }
+
   .skills-title {
-    font-size: clamp(40px, 11vw, 52px);
-    line-height: 1;
+    font-size: clamp(34px, 9.5vw, 46px);
+    line-height: 0.98;
+    margin-bottom: 16px;
   }
+
   .skills-grid {
     grid-template-columns: 1fr;
+    gap: 18px;
   }
+
   .skill-card {
     min-height: auto;
   }
@@ -305,35 +320,78 @@
 
 @media (max-width: 640px) {
   .skills-header {
-    margin-bottom: 34px;
+    margin-bottom: 18px;
+  }
+
+  .skills-kicker {
+    font-size: 12px;
+    letter-spacing: 1.4px;
+    margin-bottom: 12px;
   }
 
   .skills-intro {
-    font-size: 16px;
-    line-height: 25px;
+    font-size: 15px;
+    line-height: 23px;
   }
 
   .skills-overview {
     grid-template-columns: 1fr;
-    padding: 0;
-    border: 0;
-    background: transparent;
+    gap: 10px;
+    margin-bottom: 18px;
+    padding: 10px;
+    border: 1px solid rgba(34, 211, 238, 0.12);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.025);
   }
 
   .skills-overview div {
-    padding: 0.9rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 0.85rem 0.95rem;
   }
 
   .skill-card-media {
-    height: 165px;
+    height: 142px;
+  }
+
+  .skill-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    font-size: 20px;
+  }
+
+  .skill-level {
+    padding: 5px 10px;
+    font-size: 10px;
+    letter-spacing: 0.6px;
   }
 
   .skill-card-body {
     padding: 1rem 1rem 0;
   }
 
+  .skill-card h3 {
+    font-size: 22px;
+    line-height: 1.1;
+  }
+
   .skill-summary {
     min-height: 0;
+    margin-bottom: 1rem;
+  }
+
+  .skill-bar {
+    padding: 0.65rem;
+  }
+
+  .skill-bar-header {
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 12px;
+    line-height: 1.25;
   }
 
   .skill-tags {

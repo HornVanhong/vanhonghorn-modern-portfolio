@@ -18,7 +18,7 @@ const Contact = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (submitting) return;
@@ -37,16 +37,42 @@ const Contact = () => {
     setSubmitStatus("idle");
     setStatusMessage("");
 
-    const subject = encodeURIComponent(`Portfolio message from ${name}`);
-    const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
-    );
+    try {
+      const payload = new FormData();
+      payload.append("name", name);
+      payload.append("email", email);
+      payload.append("message", message);
+      payload.append("_subject", `Portfolio message from ${name}`);
+      payload.append("_template", "table");
+      payload.append("_captcha", "false");
 
-    window.location.href = `mailto:vanhonghorn37@gmail.com?subject=${subject}&body=${body}`;
+      const res = await fetch("https://formsubmit.co/ajax/vanhonghorn37@gmail.com", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+        },
+        body: payload,
+      });
 
-    setSubmitStatus("success");
-    setStatusMessage("Your email app is opening with the message ready to send.");
-    setSubmitting(false);
+      const data = await res.json().catch(() => null);
+
+      if (!res.ok || data?.success === false) {
+        throw new Error(data?.message ?? "Message could not be sent.");
+      }
+
+      setSubmitStatus("success");
+      setStatusMessage("Message sent successfully. Thank you for reaching out.");
+      setFormData({ name: "", email: "", message: "" });
+    } catch (error) {
+      setSubmitStatus("error");
+      setStatusMessage(
+        error instanceof Error
+          ? error.message
+          : "Message could not be sent. Please try Telegram or email."
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -118,7 +144,7 @@ const Contact = () => {
             <div className="contact-form-head">
               <h4>Send a message</h4>
               <p>
-                Leave your details and I’ll open a ready-to-send email draft for you.
+                Leave your details and your message will be sent directly to my inbox.
               </p>
             </div>
 

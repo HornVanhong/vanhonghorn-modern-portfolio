@@ -41,6 +41,10 @@
   letter-spacing: 0.2px;
 }
 @media only screen and (max-width: 1024px) {
+  .header {
+    background: #0b080c !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
   .header ul {
     position: fixed;
     top: 0;

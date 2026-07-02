@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import setCharacter from "./utils/character";
 import setLighting from "./utils/lighting";
@@ -30,6 +30,7 @@ const Scene = () => {
   const canvasDiv = useRef<HTMLDivElement | null>(null);
   const hoverDivRef = useRef<HTMLDivElement>(null);
   const sceneRef = useRef(new THREE.Scene());
+  const [webGLUnavailable, setWebGLUnavailable] = useState(false);
   const { setLoading } = useLoading();
 
   useEffect(() => {
@@ -39,6 +40,7 @@ const Scene = () => {
       let cleanupAllTimeline: (() => void) | null = null;
 
       const finishWithoutWebGL = () => {
+        setWebGLUnavailable(true);
         setLoading(100);
         cleanupAllTimeline = setAllTimeline();
       };
@@ -80,6 +82,7 @@ const Scene = () => {
         "webglcontextlost",
         (event) => {
           event.preventDefault();
+          setWebGLUnavailable(true);
           setLoading(100);
         },
         false
@@ -208,7 +211,12 @@ const Scene = () => {
   return (
     <>
       <div className="character-container">
-        <div className="character-model" ref={canvasDiv}>
+        <div
+          className={`character-model ${
+            webGLUnavailable ? "character-unavailable" : ""
+          }`}
+          ref={canvasDiv}
+        >
           <div className="character-rim"></div>
           <div className="character-hover" ref={hoverDivRef}></div>
         </div>

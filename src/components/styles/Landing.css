@@ -110,6 +110,9 @@
   bottom: 50px;
   pointer-events: inherit;
 }
+.character-model.character-unavailable {
+  display: none;
+}
 .character-model::after {
   content: "";
   width: 100vw;
@@ -289,6 +292,9 @@ h2.landing-info-h2 {
   .character-model {
     height: 72vh;
     bottom: 12px;
+  }
+  .character-model.character-unavailable {
+    display: none;
   }
 }
 @media screen and (min-width: 768px) {

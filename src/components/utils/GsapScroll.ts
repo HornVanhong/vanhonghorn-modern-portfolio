@@ -31,8 +31,8 @@ export function setCharTimeline(
   });
   const tl3 = gsap.timeline({
     scrollTrigger: {
-      trigger: ".whatIDO",
-      start: "top top",
+      trigger: ".about-section",
+      start: "bottom center",
       end: "bottom top",
       scrub: true,
       invalidateOnRefresh: true,

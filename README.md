@@ -1,65 +1,60 @@
-# My Portfolio Website - Overview 🚀
+# Vanhong Horn - Modern Portfolio Website 🚀
 
-This repository contains the open-source version of my personal portfolio website.  
-Feel free to explore the code and use it for learning and inspiration.
-
----
-
-## ⚠️ Usage Notice
-
-This project is shared for learning purposes only.
-
-Please do NOT:
-- Clone or replicate the full website or design
-- Repost it with minor content changes
-- Use this project for commercial/client work
-- Create tutorials or content using this exact project
-
-If you use parts of the code, you must provide proper credit linking back to the original repository.
-
-Build your own version — don’t just copy.
-
-— Moncy Yohannan
-
----
-
-## 🛠️ Instructions
-
-I have modified the GSAP Club plugins using trial versions.  
-⚠️ Note: Trial plugins cannot be used for production or hosting.
-
-For official GSAP Club plugins, refer here:  
-https://gsap.com/docs/v3/Installation/
+Welcome to my personal portfolio repository! This website showcase is built as a highly interactive, modern single-page application highlighting my work, academic journey, cybersecurity certifications, and development skills.
 
 ---
 
 ## ⚙️ Tech Stack
 
-React • TypeScript • GSAP • Three.js • WebGL • HTML • CSS • JavaScript
+* **Core Framework**: React (Vite)
+* **Language**: TypeScript
+* **Animations**: GSAP (GreenSock Animation Platform) & ScrollTrigger / ScrollSmoother
+* **3D Visuals**: Three.js (React Three Fiber) & WebGL physics canvas
+* **Icons**: React Icons (Fa / Md sets)
+* **Styling**: Vanilla CSS
 
 ---
 
-## 🎨 Assets Usage
+## 📂 Key Sections
 
-Some 3D assets included in this repository are free to use for learning purposes.
-
-However:
-
-- The original 3D avatar used on my live portfolio is NOT included in this repository
-- That avatar is a custom asset created over ~1 month
-- It is not open source and not available for reuse
-
-Any usage, extraction, or redistribution of that avatar from my live website is strictly prohibited.
+1. **Landing & Interactive 3D Model**: Personalized intro showing my career focus: **Security / Developer** with a custom Three.js environment model.
+2. **About Me**: Brief background details in secure systems, network routing, and frontend application development.
+3. **What I Do**: Interactive tech stack listings divided into core developer competencies and network/cybersecurity tools.
+4. **Education & Experience**: A chronological, animated GSAP timeline of my history (KSHRD, ANT Center, RUPP, RHB Bank, Instinct Institute, DDD, General Science High School).
+5. **My Work**: A horizontal scrolling card showcase displaying 6 developer/security projects alongside 3 downloadable PDF lab deliverables.
+6. **Certificates Grid**: A collection of 4 verified credentials (Cyber Security Specialist, Coding Challenge awards, etc.) with integrated PDF/Image previews and download targets.
+7. **Contact**: A clean glassmorphism feedback form for message submissions connected with async status banners.
 
 ---
 
-![Protfolio-Preview](https://github.com/user-attachments/assets/3c4557e7-6392-4928-b8a9-7b2476ef4edd)
+## 🛠️ Local Development Setup
+
+To run this project locally, follow these steps:
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/HornVanhong/vanhonghorn-modern-portfolio.git
+cd vanhonghorn-modern-portfolio
+```
+
+### 2. Install dependencies
+```bash
+npm install
+```
+
+### 3. Run the development server
+```bash
+npm run dev
+```
+Open [http://localhost:5173/](http://localhost:5173/) in your browser to view the portfolio.
+
+### 4. Build for production
+```bash
+npm run build
+```
 
 ---
 
 ## 📄 License
 
-This project is licensed under the Personal Portfolio License (PPL) v1.0.
-
-See the LICENSE file for full details
-
+This repository is built for personal representation. Feel free to explore the code for learning and inspiration.

@@ -33,7 +33,7 @@
   flex-direction: column;
   width: 600px;
   box-sizing: border-box;
-  border-right: 1px solid #363636;
+  border-right: 1px solid rgba(34, 211, 238, 0.16);
   flex-shrink: 0;
   gap: 50px;
   justify-content: start;
@@ -46,7 +46,7 @@
   content: "";
   width: calc(50000vw);
   height: 1px;
-  background-color: #363636;
+  background-color: rgba(34, 211, 238, 0.16);
   position: absolute;
   left: 50%;
   top: 0;
@@ -106,7 +106,7 @@
   align-items: center;
   font-size: 25px;
   box-shadow: 0px 0px 10px 0px rgba(255, 255, 255, 0.5),
-    inset 0px 0px 10px 0px #393939;
+    inset 0px 0px 10px 0px rgba(34, 211, 238, 0.35);
   transition: 0.3s;
   opacity: 0;
 }
@@ -205,6 +205,11 @@
     height: auto !important;
     padding-bottom: 50px;
   }
+  .work-section h2 {
+    margin-top: 70px;
+    font-size: clamp(40px, 12vw, 56px);
+    line-height: 1;
+  }
   .work-container {
     align-content: normal;
     height: auto;
@@ -218,9 +223,9 @@
   }
   .work-box {
     width: 100% !important;
-    padding: 60px 24px !important;
+    padding: 44px 0 !important;
     border-right: none !important;
-    border-bottom: 1px solid #363636 !important;
+    border-bottom: 1px solid rgba(34, 211, 238, 0.16) !important;
     gap: 30px !important;
   }
   .work-flex .work-box:nth-child(even) {
@@ -229,6 +234,23 @@
   .work-flex::before,
   .work-flex::after {
     display: none !important;
+  }
+}
+
+@media only screen and (max-width: 560px) {
+  .work-title {
+    gap: 20px;
+  }
+  .work-title h3 {
+    font-size: 30px;
+    line-height: 1;
+  }
+  .work-info h4,
+  .work-info p {
+    overflow-wrap: anywhere;
+  }
+  .work-pdf-actions {
+    flex-wrap: wrap;
   }
 }
 
@@ -251,7 +273,7 @@
 
 .work-pdf-btn.open {
   background: var(--accentColor);
-  color: #0b080c;
+  color: var(--backgroundColor);
 }
 
 .work-pdf-btn.open:hover {

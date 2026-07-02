@@ -17,8 +17,10 @@
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
-  --accentColor: #c2a4ff;
-  --backgroundColor: #0b080c;
+  --accentColor: #22d3ee;
+  --accentColorStrong: #06b6d4;
+  --accentColorSoft: rgba(34, 211, 238, 0.14);
+  --backgroundColor: #041014;
   --vh: 100vh;
   --vh: 100svh;
 }
@@ -57,7 +59,7 @@ main {
 body {
   margin: 0;
   height: auto;
-  background-color: #000;
+  background-color: var(--backgroundColor);
   flex-grow: 1;
   --cWidth: calc(100% - 30px);
   --cMaxWidth: 1920px;
@@ -73,6 +75,15 @@ body {
   width: 100%;
   margin: auto;
   position: relative;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: rgba(34, 211, 238, 0.28);
+  color: #ffffff;
 }
 .container1 {
   width: var(--cWidth);
@@ -117,10 +128,20 @@ body {
 }
 @media screen and (max-width: 900px) {
   .techstack h2 {
-    font-size: 40px;
+    font-size: clamp(34px, 10vw, 46px);
   }
 }
 
 html, body, a, button, [role="button"], [data-cursor] {
   cursor: none !important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (max-width: 1024px), (pointer: coarse) {
+  html, body, a, button, [role="button"], [data-cursor] {
+    cursor: auto !important;
+  }
 }

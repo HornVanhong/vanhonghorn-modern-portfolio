@@ -29,16 +29,16 @@ const Navbar = ({ onReady }: { onReady?: () => void }) => {
     }
 
     const clickHandlers: Array<{ elem: HTMLAnchorElement; handler: (e: MouseEvent) => void }> = [];
-    let links = document.querySelectorAll(".header ul a");
+    const links = document.querySelectorAll(".header ul a");
     links.forEach((elem) => {
-      let element = elem as HTMLAnchorElement;
+      const element = elem as HTMLAnchorElement;
       const onClick = (e: MouseEvent) => {
         setMenuOpen(false);
 
         if (window.innerWidth > 1024) {
           e.preventDefault();
-          let elem = e.currentTarget as HTMLAnchorElement;
-          let section = elem.getAttribute("data-href");
+          const elem = e.currentTarget as HTMLAnchorElement;
+          const section = elem.getAttribute("data-href");
           smoother.scrollTo(section, true, "top top");
         }
       };

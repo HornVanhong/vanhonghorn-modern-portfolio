@@ -35,10 +35,19 @@ const careerItems = [
   },
   {
     type: "Training",
-    role: "Flutter & Cisco Training",
-    company: "Instinct Institute & Cisco Academy",
+    logo: "/images/logo/Instinct.jpeg",
+    role: "Flutter 3 Training",
+    company: "Instinct Institute",
     year: "2022 - 2023",
-    desc: "Completed Instinct Institute Flutter 3 course for mobile UI/API work, and Cisco Networking Academy fundamentals course."
+    desc: "Completed Instinct Institute Flutter 3 course for mobile UI, API integration, and cross-platform application development."
+  },
+  {
+    type: "Training",
+    logoText: "Cisco",
+    role: "Networking Fundamentals",
+    company: "Cisco Networking Academy",
+    year: "2022 - 2023",
+    desc: "Completed Cisco Networking Academy fundamentals training covering networking concepts, routing basics, and network administration foundations."
   },
   {
     type: "Experience",
@@ -50,6 +59,7 @@ const careerItems = [
   },
   {
     type: "Education",
+    logo: "/images/logo/HighSchool.webp",
     role: "High School",
     company: "General Education",
     year: "2020 - 2021",
@@ -81,6 +91,11 @@ const Career = () => {
                     {item.logo && (
                       <span className="career-logo">
                         <img src={item.logo} alt={`${item.company} logo`} loading="lazy" />
+                      </span>
+                    )}
+                    {item.logoText && (
+                      <span className="career-logo career-logo-text" aria-label={`${item.company} logo`}>
+                        {item.logoText}
                       </span>
                     )}
                     <div className="career-heading-text">

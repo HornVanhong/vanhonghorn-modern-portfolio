@@ -137,6 +137,15 @@
   display: block;
 }
 
+.career-logo-text {
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
 .career-heading-text {
   min-width: 0;
 }
@@ -332,6 +341,10 @@
     flex-basis: 46px;
     padding: 6px;
     border-radius: 11px;
+  }
+
+  .career-logo-text {
+    font-size: 11px;
   }
 
   .career-info h3 {

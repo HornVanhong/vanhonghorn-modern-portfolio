@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { MdArrowOutward, MdCopyright } from "react-icons/md";
-import "./styles/Contact.css";
+// import "./styles/Contact.css";
 
 const Contact = () => {
   const [formData, setFormData] = useState({

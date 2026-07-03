@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./styles/Loading.css";
+// import "./styles/Loading.css";
 import { useLoading } from "../context/LoadingProvider";
 
 import Marquee from "react-fast-marquee";

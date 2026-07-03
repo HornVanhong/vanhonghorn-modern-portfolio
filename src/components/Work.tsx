@@ -1,4 +1,4 @@
-import "./styles/Work.css";
+// import "./styles/Work.css";
 import WorkImage from "./WorkImage";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -50,7 +50,7 @@ const projects: ProjectItem[] = [
     title: "Restaurant Website - Jong Nham",
     category: "GitHub Project / Website",
     tools: "HTML, CSS, restaurant landing page, responsive layout, Vercel deployment",
-    image: restaurantPreview,
+    image: restaurantPreview.src,
     repoUrl: "https://github.com/HornVanhong/JongNham_Resturant",
     liveUrl: "https://jong-nham-resturant.vercel.app"
   },
@@ -58,13 +58,13 @@ const projects: ProjectItem[] = [
     title: "EduTrace",
     category: "Education Project / Student Tracking",
     tools: "Student records, education workflow, dashboard UI, tracking and management features",
-    image: eduTraceDashboard
+    image: eduTraceDashboard.src
   },
   {
     title: "Smart App - NAS",
     category: "GitHub Project / Smart Mobile Service",
     tools: "JavaScript, Khmer interface, Smart service dashboard, account and package UI",
-    image: smartNasPreview,
+    image: smartNasPreview.src,
     repoUrl: "https://github.com/HornVanhong/Smart_App"
   },
   {

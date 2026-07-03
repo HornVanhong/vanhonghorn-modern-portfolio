@@ -1,5 +1,5 @@
 import { FaAward, FaDownload, FaEye, FaFilePdf } from "react-icons/fa";
-import "./styles/Certificates.css";
+// import "./styles/Certificates.css";
 
 const certificateFiles = [
   {

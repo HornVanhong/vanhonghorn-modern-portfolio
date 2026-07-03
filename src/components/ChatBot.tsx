@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { FaRobot, FaPaperPlane, FaTrash, FaTimes } from "react-icons/fa";
-import "./styles/ChatBot.css";
+// import "./styles/ChatBot.css";
 
 interface Message {
   role: "user" | "assistant";

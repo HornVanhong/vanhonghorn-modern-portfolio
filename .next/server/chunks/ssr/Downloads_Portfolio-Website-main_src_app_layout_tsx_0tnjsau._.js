@@ -1,0 +1,3 @@
+module.exports=[22333,a=>{"use strict";var b=a.i(28479);a.s(["default",0,function({children:a}){return(0,b.jsx)("html",{lang:"en",children:(0,b.jsx)("body",{children:(0,b.jsx)("div",{id:"root",children:a})})})},"metadata",0,{title:"Vanhong Horn - Security & Developer Portfolio",description:"Specializing in Cyber Security, Network Configurations, and modern Front-End Web/Mobile engineering. Korea Software HRD Center 14th Gen student & MPTC Scholar.",icons:{icon:"/favicon.ico"}},"viewport",0,{width:"device-width",initialScale:1}])},41807,a=>{a.n(a.i(22333))}];
+
+//# sourceMappingURL=Downloads_Portfolio-Website-main_src_app_layout_tsx_0tnjsau._.js.map

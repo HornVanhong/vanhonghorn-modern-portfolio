@@ -9,7 +9,7 @@ import {
   FaNetworkWired,
   FaShieldAlt,
 } from "react-icons/fa";
-import "./styles/WhatIDo.css";
+// import "./styles/WhatIDo.css";
 
 gsap.registerPlugin(ScrollTrigger);
 

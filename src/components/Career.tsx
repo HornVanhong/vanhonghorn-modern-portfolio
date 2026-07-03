@@ -1,4 +1,4 @@
-import "./styles/Career.css";
+// import "./styles/Career.css";
 
 const careerItems = [
   {

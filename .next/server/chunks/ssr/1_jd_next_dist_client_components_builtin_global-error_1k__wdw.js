@@ -1,3 +1,0 @@
-module.exports=[80728,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(95280);a.n(d("[project]/Downloads/Portfolio-Website-main/node_modules/next/dist/client/components/builtin/global-error.js <module evaluation>"))},63787,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(95280);a.n(d("[project]/Downloads/Portfolio-Website-main/node_modules/next/dist/client/components/builtin/global-error.js"))},48499,a=>{"use strict";a.i(80728);var b=a.i(63787);a.n(b)},23977,a=>{a.n(a.i(48499))}];
-
-//# sourceMappingURL=1_jd_next_dist_client_components_builtin_global-error_1k__wdw.js.map

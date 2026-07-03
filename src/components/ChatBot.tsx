@@ -91,6 +91,11 @@ export default function ChatBot() {
       }
 
       const data = await response.json();
+
+      if (typeof data.text !== "string" || !data.text.trim()) {
+        throw new Error(data.error || "Chat response was empty");
+      }
+
       const reply: Message = { role: "assistant", content: data.text };
       saveHistory([...updatedMessages, reply]);
     } catch (err) {

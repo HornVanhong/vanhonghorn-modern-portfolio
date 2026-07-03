@@ -2,13 +2,59 @@
   display: flex;
   align-items: center;
   justify-content: left;
-  place-items: center;
+  gap: clamp(28px, 6vw, 96px);
   position: relative;
   opacity: 1;
   height: auto;
   width: var(--cWidth);
   margin: auto;
 }
+
+.about-profile {
+  position: relative;
+  width: min(360px, 34vw);
+  aspect-ratio: 4 / 5;
+  margin: 0;
+  flex: 0 0 auto;
+  border-radius: 24px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(34, 211, 238, 0.22);
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.about-profile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, transparent 58%, rgba(4, 16, 20, 0.78) 100%),
+    linear-gradient(135deg, rgba(34, 211, 238, 0.12), transparent 42%);
+}
+
+.about-profile-glow {
+  position: absolute;
+  inset: auto -22% -18%;
+  height: 42%;
+  background: rgba(34, 211, 238, 0.28);
+  filter: blur(44px);
+  z-index: 0;
+}
+
+.about-profile-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center 32%;
+  position: relative;
+  z-index: 1;
+  transform: scale(1.02);
+}
+
 .about-me {
   padding: 50px 0px;
   padding-bottom: 0;
@@ -33,10 +79,18 @@
 @media only screen and (max-width: 767px) {
   .about-section {
     width: min(100% - 28px, 520px);
-    padding: 24px 0 0;
+    padding: 40px 0 0;
     align-items: flex-start;
+    flex-direction: column;
+    gap: 24px;
     transform: none !important;
     opacity: 1 !important;
+  }
+
+  .about-profile {
+    width: min(100%, 360px);
+    aspect-ratio: 5 / 6;
+    border-radius: 18px;
   }
 
   .about-me {
@@ -68,6 +122,10 @@
   }
 }
 @media only screen and (min-width: 768px) {
+  .about-section {
+    align-items: center;
+  }
+
   .about-me {
     width: 500px;
     max-width: calc(100% - 70px);
@@ -80,15 +138,20 @@
 @media only screen and (min-width: 1025px) {
   .about-section {
     width: var(--cWidth);
-    justify-content: right;
+    justify-content: center;
     max-width: 1920px;
     height: var(--vh);
     padding: 0px;
     opacity: 1;
   }
+
+  .about-profile {
+    width: min(420px, 28vw);
+  }
+
   .about-me {
     padding: 0px;
-    width: 50%;
+    width: min(50%, 680px);
   }
   .about-me p {
     font-size: 1.9vw;

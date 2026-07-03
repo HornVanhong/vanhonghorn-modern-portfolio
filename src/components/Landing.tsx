@@ -6,6 +6,13 @@ const Landing = ({ children }: PropsWithChildren) => {
     <>
       <div className="landing-section" id="landingDiv">
         <div className="landing-container">
+          <figure className="landing-profile">
+            <img
+              src="/images/Profile.jpg"
+              alt="Horn Vanhong profile portrait"
+              className="landing-profile-img"
+            />
+          </figure>
           <div className="landing-intro">
             <h2>Hello! I'm</h2>
             <h1>

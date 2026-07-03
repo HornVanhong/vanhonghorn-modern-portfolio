@@ -3,6 +3,15 @@ import "./styles/About.css";
 const About = () => {
   return (
     <div className="about-section" id="about">
+      <figure className="about-profile">
+        <div className="about-profile-glow" aria-hidden="true" />
+        <img
+          src="/images/Profile.jpg"
+          alt="Horn Vanhong profile portrait"
+          className="about-profile-img"
+          loading="lazy"
+        />
+      </figure>
       <div className="about-me">
         <h3 className="title">About Me</h3>
         <p className="para">
